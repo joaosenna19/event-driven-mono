@@ -5,6 +5,9 @@
   "references": [
     {
       "path": "./apps/main-app"
+    },
+    {
+      "path": "./libs/streams-rabbitmq"
     }
   ]
 }
