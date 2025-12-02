@@ -1,7 +1,13 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Client, Publisher } from "rabbitmq-stream-js-client";
+import {
+  Client,
+  DeclareConsumerParams,
+  Offset,
+  Publisher,
+} from "rabbitmq-stream-js-client";
 import { STREAMS_RABBITMQ_CONNECTION } from "./connection.symbol";
 import { Logger } from "@nestjs/common";
+
 @Injectable()
 export class StreamsRabbitmqService {
   constructor(
@@ -9,11 +15,23 @@ export class StreamsRabbitmqService {
   ) {}
   private readonly logger = new Logger(StreamsRabbitmqService.name);
 
-  async createPublisher(stream: string): Promise<Publisher> {
+  private async createPublisher(stream: string): Promise<Publisher> {
     return this.client.declarePublisher({ stream });
   }
 
-  async publishMessage() {
+  async createConsumer(): Promise<void> {
+    const consumerOptions: DeclareConsumerParams = {
+      stream: "event-stream",
+      offset: Offset.next(),
+      consumerRef: "event-consumer",
+    };
+
+    await this.client.declareConsumer(consumerOptions, (msg) => {
+      this.logger.log(`Received message: ${msg.content}`);
+    });
+  }
+
+  async publishMessage(): Promise<void> {
     try {
       const publisher = await this.createPublisher("event-stream");
       publisher.send(Buffer.from("Hello, RabbitMQ Streams!"));
