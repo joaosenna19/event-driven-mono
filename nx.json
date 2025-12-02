@@ -1,16 +1,16 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/eslint.config.mjs"
     ],
     "sharedGlobals": []
+  },
+  "tui": {
+    "enabled": false
   },
   "plugins": [
     {
@@ -26,9 +26,7 @@
           "watchDepsName": "watch-deps"
         }
       },
-      "exclude": [
-        "libs/streams-rabbitmq/*"
-      ]
+      "exclude": ["libs/streams-rabbitmq/*"]
     },
     {
       "plugin": "@nx/webpack/plugin",
@@ -49,9 +47,7 @@
     },
     {
       "plugin": "@nx/js/typescript",
-      "include": [
-        "libs/streams-rabbitmq/*"
-      ],
+      "include": ["libs/streams-rabbitmq/*"],
       "options": {
         "typecheck": {
           "targetName": "typecheck"

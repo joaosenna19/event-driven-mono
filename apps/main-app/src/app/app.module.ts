@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from "@nestjs/common";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { EventDrivenMonoStreamsRabbitmqModule } from "@event-driven-mono/streams-rabbitmq";
 
 @Module({
-  imports: [],
+  imports: [EventDrivenMonoStreamsRabbitmqModule],
   controllers: [AppController],
   providers: [AppService],
 })
