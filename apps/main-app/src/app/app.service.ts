@@ -7,6 +7,6 @@ export class AppService {
     private readonly streamsRabbitmqService: StreamsRabbitmqService
   ) {}
   async publishEvent(): Promise<void> {
-    await this.streamsRabbitmqService.publishMessage();
+    await this.streamsRabbitmqService.publishMessage("Invoice uploaded");
   }
 }

@@ -31,11 +31,11 @@ export class StreamsRabbitmqService {
     });
   }
 
-  async publishMessage(): Promise<void> {
+  async publishMessage(content: string): Promise<void> {
     try {
       const publisher = await this.createPublisher("event-stream");
-      publisher.send(Buffer.from("Hello, RabbitMQ Streams!"));
-      this.logger.log("Message published to 'event-stream'");
+      publisher.send(Buffer.from(content));
+      this.logger.log(`${content}`);
     } catch (error) {
       this.logger.error("Failed to publish message", error);
     }
